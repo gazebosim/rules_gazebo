@@ -1,0 +1,27 @@
+load("@rules_gz//gz:headers.bzl", "gz_configure_header", "gz_export_header")
+load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
+
+gz_export_header(
+    name = "export",
+    out = "include/Export.hh",
+    export_base = "GZ_SMOKE",
+    lib_name = "gz-smoke",
+)
+
+diff_test(
+    name = "export_diff_test",
+    file1 = "golden/Export.hh",
+    file2 = "include/Export.hh",
+)
+
+gz_configure_header(
+    name = "config",
+    src = "config.hh.in",
+    package_xml = "package.xml",
+)
+
+diff_test(
+    name = "config_diff_test",
+    file1 = "golden/config.hh",
+    file2 = "config.hh",
+)

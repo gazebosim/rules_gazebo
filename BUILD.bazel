@@ -1,5 +1,5 @@
-load("@buildifier_prebuilt//:rules.bzl", "buildifier", "buildifier_test")
 load("@rules_license//rules:license.bzl", "license")
+load("@buildifier_prebuilt//:rules.bzl", "buildifier", "buildifier_test")
 
 package(
     default_applicable_licenses = [":license"],

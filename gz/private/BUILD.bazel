@@ -1,0 +1,17 @@
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+load("@rules_python//python:defs.bzl", "py_binary")
+
+bzl_library(
+    name = "headers",
+    srcs = [
+        "gz_configure_file.bzl",
+        "gz_export_header.bzl",
+    ],
+)
+
+py_binary(
+    name = "gz_configure_file",
+    srcs = ["gz_configure_file.py"],
+    main = "gz_configure_file.py",
+    visibility = ["//visibility:public"],
+)
