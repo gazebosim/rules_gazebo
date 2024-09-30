@@ -10,5 +10,5 @@ jobs:
     permissions:
       contents: write
     with:
-      release_files: rules_gz-*.tar.gz
+      release_files: rules_gazebo-*.tar.gz
       prerelease: false

@@ -1,4 +1,4 @@
-# rules_gz
+# rules_gazebo
 
 Bazel rules to support building [Gazebo](https://gazebosim.org) libraries
 
@@ -7,5 +7,5 @@ Bazel rules to support building [Gazebo](https://gazebosim.org) libraries
 Install with bzlmod, add to MODULE.bazel
 
 ```starlark
-bazel_dep(name = "rules_gz", version = "<version>")
+bazel_dep(name = "rules_gazebo", version = "0.0.1")
 ```

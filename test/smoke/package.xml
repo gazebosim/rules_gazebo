@@ -2,6 +2,5 @@
 <package format="2">
   <name>gz-smoke</name>
   <version>0.0.1</version>
-  <description>Smoke test for rules_gz</description>
+  <description>Smoke test for rules_gazebo</description>
 </package>
-

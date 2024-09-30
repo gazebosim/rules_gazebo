@@ -14,7 +14,7 @@ def gz_export_header(name, lib_name, export_base, out):
             "@export_base@": export_base,
             "@lib_name@": lib_name,
         },
-        template = "@rules_gz//gz/templates:gz_export_header.tpl.hh",
+        template = "@rules_gazebo//gazebo/templates:gz_export_header.tpl.hh",
     )
     cc_library(
         name = name,

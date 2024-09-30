@@ -1,8 +1,8 @@
 "Bazel dependencies"
 
 bazel_dep(name = "bazel_skylib", version = "1.7.1")
-bazel_dep(name = "rules_gz", version = "0.0.0")
+bazel_dep(name = "rules_gazebo", version = "0.0.0")
 local_path_override(
-    module_name = "rules_gz",
+    module_name = "rules_gazebo",
     path = "../..",
 )

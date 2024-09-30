@@ -15,11 +15,11 @@
 """Core rules for building Gazebo libraries"""
 
 load(
-    "//gz/private:gz_configure_file.bzl",
+    "//gazebo/private:gz_configure_file.bzl",
     _gz_configure_header = "gz_configure_file",
 )
 load(
-    "//gz/private:gz_export_header.bzl",
+    "//gazebo/private:gz_export_header.bzl",
     _gz_export_header = "gz_export_header",
 )
 

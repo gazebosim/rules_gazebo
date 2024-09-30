@@ -5,7 +5,7 @@
 
 set -o errexit -o nounset -o pipefail
 
-RULES_NAME="rules_gz"
+RULES_NAME="rules_gazebo"
 TAG="${GITHUB_REF_NAME}"
 PREFIX="${RULES_NAME}-${TAG:1}"
 ARCHIVE="${RULES_NAME}-${TAG:1}.tar.gz"
