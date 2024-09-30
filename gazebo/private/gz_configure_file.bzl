@@ -37,7 +37,7 @@ _gz_configure_file_gen = rule(
         "gz_configure_file_py": attr.label(
             cfg = "exec",
             executable = True,
-            default = Label("//gz/private:gz_configure_file"),
+            default = Label("//gazebo/private:gz_configure_file"),
         ),
         "out": attr.output(mandatory = True),
         "package_xml": attr.label(allow_single_file = True, mandatory = True),
