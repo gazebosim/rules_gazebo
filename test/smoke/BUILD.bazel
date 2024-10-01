@@ -1,5 +1,5 @@
-load("@rules_gazebo//gazebo:headers.bzl", "gz_configure_header", "gz_export_header")
 load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
+load("@rules_gazebo//gazebo:headers.bzl", "gz_configure_header", "gz_export_header")
 
 gz_export_header(
     name = "export",

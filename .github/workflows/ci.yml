@@ -17,10 +17,7 @@ jobs:
           ".",
           "test/smoke",
         ]
-      # we only support Bazel 7, and only with bzlmod enabled
       exclude: |
         [
-          {"bzlmodEnabled": false},
           {"bazelversion": "5.4.0"},
-          {"bazelversion": "6.4.0"},
         ]
