@@ -13,14 +13,6 @@ ARCHIVE="rules_gazebo-$TAG.tar.gz"
 git archive --format=tar --prefix=${PREFIX}/ ${TAG} | gzip > $ARCHIVE
 SHA=$(shasum -a 256 $ARCHIVE | awk '{print $1}')
 
-cat << EOF
-Add to your \`MODULE.bazel\` file:
-
-\`\`\`starlark
-bazel_dep(name = "rules_gazebo", version = "${TAG}")
-\`\`\`
-EOF
-
 cat > release_notes.txt << EOF
 ## Using Bzlmod
 
