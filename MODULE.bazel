@@ -12,4 +12,4 @@ bazel_dep(name = "rules_license", version = "1.0.0")
 bazel_dep(name = "rules_python", version = "0.31.0")
 
 # ===== DEV ONLY DEPS AND SETUP BELOW HERE =====
-bazel_dep(name = "buildifier_prebuilt", version = "6.1.2", dev_dependency = True)
+bazel_dep(name = "buildifier_prebuilt", version = "7.3.1", dev_dependency = True)
