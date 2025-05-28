@@ -57,7 +57,6 @@ def gz_configure_file(
         defines = None,
         undefines = None,
         package_xml = None,
-        deps = [],
         **kwargs):
     """
     Expand templates in a file using project variables
@@ -69,8 +68,8 @@ def gz_configure_file(
       defines: Variables to define
       undefines: Variables to unset
       package_xml: Package.xml file to read name and version from
-      deps: Deps to be forwarded to the cc_library target wrapping the header
-      **kwargs: Additional keyword arguments
+      **kwargs: Additional keyword arguments which will be passed to the
+        cc_libary target wrapping the header file
     """
     if not out:
         out = src
@@ -86,12 +85,11 @@ def gz_configure_file(
         undefines = undefines,
         package_xml = package_xml,
         env = {},
-        **kwargs
     )
 
     cc_library(
         name = name,
         hdrs = [out],
         includes = ["include"],
-        deps = deps,
+        **kwargs
     )
