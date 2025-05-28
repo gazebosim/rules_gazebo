@@ -1,0 +1,16 @@
+{
+  "homepage": "https://github.com/gazebosim/rules_gazebo",
+  "maintainers": [
+    {
+      "email": "mjcarroll@intrinsic.ai",
+      "github": "mjcarroll",
+      "name": "Michael Carroll",
+      "github_user_id": 279701
+    }
+  ],
+  "repository": [
+    "github:gazebosim/rules_gazebo"
+  ],
+  "versions": [],
+  "yanked_versions": {}
+}
