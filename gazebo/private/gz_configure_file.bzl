@@ -68,7 +68,8 @@ def gz_configure_file(
       defines: Variables to define
       undefines: Variables to unset
       package_xml: Package.xml file to read name and version from
-      **kwargs: Additional keyword arguments
+      **kwargs: Additional keyword arguments which will be passed to the
+        cc_libary target wrapping the header file
     """
     if not out:
         out = src
@@ -84,11 +85,11 @@ def gz_configure_file(
         undefines = undefines,
         package_xml = package_xml,
         env = {},
-        **kwargs
     )
 
     cc_library(
         name = name,
         hdrs = [out],
         includes = ["include"],
+        **kwargs
     )
