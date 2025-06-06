@@ -6,6 +6,7 @@ bzl_library(
     srcs = [
         "gz_configure_file.bzl",
         "gz_export_header.bzl",
+        "gz_include_header.bzl",
     ],
 )
 
