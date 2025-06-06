@@ -22,7 +22,12 @@ load(
     "//gazebo/private:gz_export_header.bzl",
     _gz_export_header = "gz_export_header",
 )
+load(
+    "//gazebo/private:gz_include_header.bzl",
+    _gz_include_header = "gz_include_header",
+)
 
 gz_configure_header = _gz_configure_header
 gz_configure_file = _gz_configure_header
 gz_export_header = _gz_export_header
+gz_include_header = _gz_include_header
