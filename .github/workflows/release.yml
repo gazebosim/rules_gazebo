@@ -22,7 +22,7 @@ permissions:
 
 jobs:
   release:
-    uses: bazel-contrib/.github/.github/workflows/release_ruleset.yaml@v7.2.3
+    uses: bazel-contrib/.github/.github/workflows/release_ruleset.yaml@v7.3.0
     with:
       release_files: rules_gazebo-*.tar.gz
       prerelease: false
