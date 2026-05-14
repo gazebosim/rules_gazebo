@@ -15,10 +15,10 @@ jobs:
       folders: |
         [
           ".",
-          "test/smoke",
+          "test/smoke"
         ]
       exclude: |
         [
           {"folder": ".", "bzlmodEnabled": false},
-          {"folder": "test/smoke", "bzlmodEnabled": false},
+          {"folder": "test/smoke" "bzlmodEnabled": false},
         ]
