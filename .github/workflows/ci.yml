@@ -19,6 +19,6 @@ jobs:
         ]
       exclude: |
         [
-          {"folder": ".", "bzlmodEnabled": false},
+          {"folder": ".", "bzlmodEnabled": false}
           {"folder": "test/smoke", "bzlmodEnabled": false}
         ]
