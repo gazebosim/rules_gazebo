@@ -1,0 +1,120 @@
+# Reusable workflow to publish Gazebo library releases to the Bazel Central
+# Registry. This is distinct from publish.yaml, which publishes rules_gazebo
+# itself.
+#
+# Gazebo repositories tag releases as <branch>_<semver>[-postfix], e.g.
+# gz-sensors10_10.1.1 or gz-sensors11_11.0.0-pre1. The publish-to-bcr
+# reusable workflow expects the version in semver-(optional postfix) format,
+# so this workflow extracts the <branch>_ prefix and passes it along as
+# tag_prefix.
+#
+# It also checks whether the release branch matching the tag prefix exists
+# (e.g. gz-sensors11 for gz-sensors11_11.0.0-pre1). Tags pushed to main
+# before a release branch has been created are not published to BCR, while
+# prereleases made from stable branches are.
+#
+# Example caller (in each gz repository, .github/workflows/publish.yaml):
+#
+#   name: Publish to BCR
+#   on:
+#     workflow_dispatch:
+#       inputs:
+#         tag_name:
+#           description: git tag being released
+#           required: true
+#           type: string
+#     push:
+#       tags:
+#         - 'gz-sensors[1-9]?[0-9]_[0-9]+.[0-9]+.[0-9]+*'
+#   jobs:
+#     publish:
+#       uses: gazebosim/rules_gazebo/.github/workflows/publish-gz-to-bcr.yaml@v0.1.0
+#       with:
+#         tag_name: ${{ inputs.tag_name || github.ref_name }}
+#       permissions:
+#         attestations: write
+#         contents: write
+#         id-token: write
+#       secrets:
+#         publish_token: ${{ secrets.BCR_PUBLISH_TOKEN }}
+name: Publish Gazebo library to BCR
+on:
+  workflow_call:
+    inputs:
+      tag_name:
+        description: git tag being released, in <branch>_<semver>[-postfix] format
+        required: true
+        type: string
+      registry_fork:
+        description: GitHub repository which is a fork of the upstream BCR where the Pull Request will be opened
+        required: false
+        type: string
+        default: gazebo-forks/bazel-central-registry
+      attest:
+        description: Whether to attest the release archive
+        required: false
+        type: boolean
+        default: false
+      draft:
+        description: Whether to open the BCR Pull Request as a draft
+        required: false
+        type: boolean
+        default: false
+    secrets:
+      publish_token:
+        description: Token used to push to the BCR fork and open a pull request against the registry
+        required: true
+
+jobs:
+  extract_tag_prefix:
+    runs-on: ubuntu-latest
+    outputs:
+      prefix: ${{ steps.extract.outputs.prefix }}
+      tag_name: ${{ steps.extract.outputs.tag_name }}
+      publish: ${{ steps.extract.outputs.publish }}
+    steps:
+      - name: Determine tag name, prefix, and whether the release branch exists
+        id: extract
+        env:
+          TAG_NAME: ${{ inputs.tag_name }}
+          REPO_URL: ${{ github.server_url }}/${{ github.repository }}
+        run: |
+          # Extract prefix (everything before the underscore)
+          prefix_name="${TAG_NAME%%_*}"
+          prefix="${prefix_name}_"
+
+          # Release branches match the tag prefix (gz-sensors10_ -> gz-sensors10),
+          # except sdformat, which uses sdformatN_ tags on sdfN branches.
+          branch="${prefix_name/#sdformat/sdf}"
+
+          # Only publish if the release branch matching the tag prefix exists
+          if git ls-remote --exit-code "$REPO_URL" "refs/heads/$branch" > /dev/null; then
+            publish=true
+          else
+            publish=false
+            echo "::notice::Release branch '$branch' does not exist; skipping BCR publication for tag '$TAG_NAME'"
+          fi
+
+          {
+            echo "tag_name=$TAG_NAME"
+            echo "prefix=$prefix"
+            echo "publish=$publish"
+          } >> "$GITHUB_OUTPUT"
+
+  publish:
+    # don't publish tags to BCR unless the release branch exists
+    if: needs.extract_tag_prefix.outputs.publish == 'true'
+    needs: extract_tag_prefix
+    uses: bazel-contrib/publish-to-bcr/.github/workflows/publish.yaml@v1.2.0
+    with:
+      tag_name: ${{ needs.extract_tag_prefix.outputs.tag_name }}
+      registry_fork: ${{ inputs.registry_fork }}
+      attest: ${{ inputs.attest }}
+      tag_prefix: ${{ needs.extract_tag_prefix.outputs.prefix }}
+      draft: ${{ inputs.draft }}
+    permissions:
+      attestations: write
+      contents: write
+      id-token: write
+    secrets:
+      publish_token: ${{ secrets.publish_token }}
